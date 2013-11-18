@@ -35,6 +35,13 @@ ul.packages {
     column-count: 4;
 
 }
+ul.systems {
+    padding: 0;
+    margin: 0;
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4;
+}
 
 th { text-align: left; }
 

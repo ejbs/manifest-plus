@@ -1,0 +1,16 @@
+* Support basic markup in docstrings or at least READMEs
+** Hyperlinks thru `reference' in docstring
+* Print to file
+* Custom CSS? Allow the user to insert their own manual if they want to.
+* Package system cross-info. (show what packages a system defines and so on) - May require actual parsing of files
+* 
+
+Wish list from https://sites.google.com/site/sabraonthehill/lisp-document-generation-apps#sec-2-2
+Wish List
+
+    Link from each package page back to the index of packages.
+
+    Author, license, version information
+    Obviously, this is only to the extent possible. If the author did not provide the information in the asd file, it will not be available.
+
+    Indexes

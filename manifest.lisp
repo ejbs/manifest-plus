@@ -75,7 +75,6 @@ a true Common Lisp while still working in Allegro's mlisp."
               (:h2 (:print (asdf:system-author system)))
               (:h3 (:print (asdf:system-description system))))))))))) 
 
-
 (defun package-page (request)
   (destructuring-bind (prefix package-name &rest rest)
       (split-sequence #\/ (subseq (request-path request) 1))
@@ -167,10 +166,10 @@ a true Common Lisp while still working in Allegro's mlisp."
         (:body
          (:h1 "All Systems")
          ((:ul :class "systems")
-          (loop for sys in (sort (maphash #'(lambda (k v) ;; key = name
-                                              (declare (ignore v))
-                                              k) (all-systems)) #'string<)
-               do (html (:li (:a :class "system" :href (:format "/system/~a" (case-invert-name sys)) sys)))))
+          (loop for sys in (sort (loop for key being the hash-keys of
+                                      (all-systems) collect key)
+                                 #'string<)
+             do (html (:li (:a :class "system" :href (:format "/system/~a" sys) sys)))))
          (:h1 "All Packages")
          ((:ul :class "packages")
           (loop for pkg in (sort (mapcar #'package-name (public-packages)) #'string<)
