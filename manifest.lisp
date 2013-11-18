@@ -47,7 +47,30 @@ a true Common Lisp while still working in Allegro's mlisp."
     ((string= (request-path request) "/") (index-page request))
     #+quicklisp((string= (request-path request) "/quicklisp") (quicklisp-page request))
     #+quicklisp((starts-with-subseq "/quicklisp/install/" (request-path request)) (quicklisp-install request))
-    ((starts-with-subseq "/package/" (request-path request)) (package-page request))))
+    ((starts-with-subseq "/package/" (request-path request)) (package-page request))
+    ((starts-with-subseq "/system/" (request-path request)) (system-page request))))
+
+(defun system-page (request)
+  "Generates the HTML-page for a selected system"
+  (destructuring-bind (prefix system-name &rest rest)
+      (split-sequence #\/ (subseq (request-path request) 1))
+    (declare (ignore rest))
+    (assert (string= prefix "system")) ;; URL is of form /system/blabla
+
+    (when-let (system (asdf:find-system system-name nil))
+      (with-response-body (s request)
+        (with-html-output (s)
+          (:html
+            (:head
+             (:title (:format "System ~a" (system-name system))
+                     (:script :type "text/javascript" :src "/jquery-1.7.1.js")
+                     (:script :type "text/javascript" :src "/manifest.js")
+                     (:link :rel "stylesheet" :type "text/css" :href "/manifest.css"))
+             (:body
+              (:div :style "float: right" (:input :id "toggle-internals" :type "checkbox") " Show internal symbols")
+              (:h1 (:print (system-name system)))
+              (:h2 (:print (asdf:system-author system)))
+              (:h3 (:print (asdf:system-description system))))))))))) 
 
 
 (defun package-page (request)
