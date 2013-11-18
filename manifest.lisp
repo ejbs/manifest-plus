@@ -216,6 +216,7 @@ a true Common Lisp while still working in Allegro's mlisp."
 (defmethod pluralization (what) (format nil "~as" what))
 
 (defmacro define-category (name (symbol what) &body body)
+  "Defines `is',`docs-for' and `pluralization' methods for the [...]"
   (let ((is-test (cdr (assoc :is body)))
         (get-docs (cdr (assoc :docs body)))
         (pluralization (cdr (assoc :pluralization body))))
