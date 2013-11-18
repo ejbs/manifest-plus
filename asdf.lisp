@@ -6,4 +6,4 @@
   (slot-value system (find-symbol "NAME" 'asdf)))
 
 (defun all-systems ()
-  )
+  asdf::*defined-systems*)
