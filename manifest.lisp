@@ -25,8 +25,8 @@ keyword argument."
            (start-server :handler (make-handler) :port port :access-logger nil :message-logger nil))))
   (host-string))
 
-(defun host-string ()
-  (format nil "http://localhost:~d/" (port *manifest-server*)))
+(defun host-string (&optional (stream nil))
+  (format stream "http://localhost:~d/" (port *manifest-server*)))
 
 (defun stop (&optional (server *manifest-server*))
   "Stop the manifest server, defaulting to *manifest-server*."
@@ -94,6 +94,7 @@ a true Common Lisp while still working in Allegro's mlisp."
                (:link :rel "stylesheet" :type "text/css" :href "/manifest.css"))
 
               (:body
+               (:a :href (host-string s)  "Back to system & package list")
                (:div :style "float: right" (:input :id "toggle-internals" :type "checkbox") " Show internal symbols")
                (:h1 (:print (package-name package)))
 
