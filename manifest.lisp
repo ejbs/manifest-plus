@@ -62,13 +62,13 @@ a true Common Lisp while still working in Allegro's mlisp."
         (with-html-output (s)
           (:html
             (:head
-             (:title (:format "System ~a" (system-name system))
-                     (:script :type "text/javascript" :src "/jquery-1.7.1.js")
-                     (:script :type "text/javascript" :src "/manifest.js")
-                     (:link :rel "stylesheet" :type "text/css" :href "/manifest.css"))
+             (:title (:format "System ~a" (system-name system)))
+             (:script :type "text/javascript" :src "/jquery-1.7.1.js")
+             (:script :type "text/javascript" :src "/manifest.js")
+             (:link :rel "stylesheet" :type "text/css" :href "/manifest.css")
              (:body
               (:div :style "float: right" (:input :id "toggle-internals" :type "checkbox") " Show internal symbols")
-              (:h1 (:print (system-name system)))
+              (:h1 (:print (case-invert-name (system-name system))))
               (:h2 (:print (asdf:system-author system)))
               (:h3 (:print (asdf:system-description system))))))))))) 
 
@@ -158,9 +158,15 @@ a true Common Lisp while still working in Allegro's mlisp."
     (with-html-output (s)
       (:html
         (:head
-         (:title "Manifest: all packages")
+         (:title "Manifest: all packages and systems")
          (:link :rel "stylesheet" :type "text/css" :href "/manifest.css"))
         (:body
+         (:h1 "All Systems")
+         ((:ul :class "systems")
+          (loop for sys in (sort (maphash #'(lambda (k v) ;; key = name
+                                              (declare (ignore v))
+                                              k) (all-systems)) #'string<)
+               do (html (:li (:a :class "system" :href (:format "/system/~a" (case-invert-name sys)) sys)))))
          (:h1 "All Packages")
          ((:ul :class "packages")
           (loop for pkg in (sort (mapcar #'package-name (public-packages)) #'string<)
