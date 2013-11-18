@@ -1,5 +1,6 @@
 ;;; Copyright (c) 2011, Peter Seibel.  All rights reserved.
-;;;
+;;; Copyright (c) 2013, Johan Sjölén.  All rights reserved.
+
 ;;; See LICENSE for licensing information.
 
 (defsystem :manifest
