@@ -1,3 +1,5 @@
+Original code: Peter Seibel
+
 This is ejbs' fork of Manifest, it focuses on adding features deemed as missing in the original software, such as using ASDF for further portable scraping of info.
 
 Manifest is a system for semi-automatically documenting Common Lisp
